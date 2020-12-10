@@ -83,7 +83,7 @@ if __name__ == '__main__':
     mark_img_path='images/mark.png'
     res_img_path='images/sfz_mark.png'
     text=u"——仅供办理居住证使用——"
-    text_to_img(u"——仅供办理居住证使用——", mark_img_path)
+    text_to_img(text, mark_img_path)
 
     add_water_mark(text,src_img_path,mark_img_path,res_img_path)
 
