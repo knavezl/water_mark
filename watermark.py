@@ -12,7 +12,7 @@ Created on 2020/12/10  14:26
 @Desc:    
     
 '''
-import math
+import os,math
 from PIL import Image, ImageDraw, ImageFont
 
 #拼接图片
@@ -44,7 +44,7 @@ def blend_images(src_img,compose_img,res_img_path):
     img.save(res_img_path)
 
 #添加水印
-def add_water_mark(src_img_path,mark_img_path,res_img_path):
+def add_water_mark(text,src_img_path,mark_img_path,res_img_path):
     src_img=Image.open(src_img_path)
     src_img = src_img.convert('RGBA')
     src_img_width,src_img_height=src_img.size
@@ -52,6 +52,7 @@ def add_water_mark(src_img_path,mark_img_path,res_img_path):
     #print('src_img_width=',src_img_width)
     #print('src_img_height=',src_img_height)
 
+    text_to_img(text, mark_img_path)
     mark_img = Image.open(mark_img_path)
     mark_img_width, mark_img_height = mark_img.size
     #print('mark_img_width=', mark_img_width)
@@ -65,8 +66,24 @@ def add_water_mark(src_img_path,mark_img_path,res_img_path):
     #叠加图片
     blend_images(src_img,compose_img,res_img_path)
 
+# 文字转图片
+def text_to_img(text,save_img_path):
+    new_image = Image.new('RGBA', (256,256))  # 创建一个新图
+    draw = ImageDraw.Draw(new_image)
+    font = ImageFont.truetype('font/simsun.ttc', 20)
+    draw.text((0, 100), text, (255,0,0), font=font)
+
+    # 旋转图像
+    new_image = new_image.rotate(20, expand=1)
+    #new_image.show()
+    new_image.save(os.path.expanduser(save_img_path))
+
 if __name__ == '__main__':
-    src_img='images/sfz.png'
-    mark_img='images/mark.png'
-    res_img='images/sfz_mark.png'
-    add_water_mark(src_img, mark_img, res_img)
+    src_img_path='images/sfz.png'
+    mark_img_path='images/mark.png'
+    res_img_path='images/sfz_mark.png'
+    text=u"——仅供办理居住证使用——"
+    text_to_img(u"——仅供办理居住证使用——", mark_img_path)
+
+    add_water_mark(text,src_img_path,mark_img_path,res_img_path)
+
