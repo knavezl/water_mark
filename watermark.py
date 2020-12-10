@@ -7,7 +7,7 @@ Created on 2020/12/10  14:26
 
 @filename: watermark.py
 
-@author: zhangliang
+@author: knavezl
 
 @Desc:    
     
